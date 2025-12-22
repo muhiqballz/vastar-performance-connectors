@@ -1,0 +1,60 @@
+import * as flatbuffers from 'flatbuffers';
+import { KeyValue, KeyValueT } from '../../../vastar/connector/ipc/key-value';
+export declare class ExecuteRequest {
+    bb: flatbuffers.ByteBuffer | null;
+    bb_pos: number;
+    __init(i: number, bb: flatbuffers.ByteBuffer): ExecuteRequest;
+    static getRootAsExecuteRequest(bb: flatbuffers.ByteBuffer, obj?: ExecuteRequest): ExecuteRequest;
+    static getSizePrefixedRootAsExecuteRequest(bb: flatbuffers.ByteBuffer, obj?: ExecuteRequest): ExecuteRequest;
+    requestId(): bigint;
+    tenantId(): string | null;
+    tenantId(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
+    workspaceId(): string | null;
+    workspaceId(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
+    traceId(): string | null;
+    traceId(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
+    connectorName(): string | null;
+    connectorName(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
+    operation(): string | null;
+    operation(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
+    deadlineAtMs(): bigint;
+    payload(index: number): number | null;
+    payloadLength(): number;
+    payloadArray(): Uint8Array | null;
+    headers(index: number, obj?: KeyValue): KeyValue | null;
+    headersLength(): number;
+    static startExecuteRequest(builder: flatbuffers.Builder): void;
+    static addRequestId(builder: flatbuffers.Builder, requestId: bigint): void;
+    static addTenantId(builder: flatbuffers.Builder, tenantIdOffset: flatbuffers.Offset): void;
+    static addWorkspaceId(builder: flatbuffers.Builder, workspaceIdOffset: flatbuffers.Offset): void;
+    static addTraceId(builder: flatbuffers.Builder, traceIdOffset: flatbuffers.Offset): void;
+    static addConnectorName(builder: flatbuffers.Builder, connectorNameOffset: flatbuffers.Offset): void;
+    static addOperation(builder: flatbuffers.Builder, operationOffset: flatbuffers.Offset): void;
+    static addDeadlineAtMs(builder: flatbuffers.Builder, deadlineAtMs: bigint): void;
+    static addPayload(builder: flatbuffers.Builder, payloadOffset: flatbuffers.Offset): void;
+    static createPayloadVector(builder: flatbuffers.Builder, data: number[] | Uint8Array): flatbuffers.Offset;
+    static startPayloadVector(builder: flatbuffers.Builder, numElems: number): void;
+    static addHeaders(builder: flatbuffers.Builder, headersOffset: flatbuffers.Offset): void;
+    static createHeadersVector(builder: flatbuffers.Builder, data: flatbuffers.Offset[]): flatbuffers.Offset;
+    static startHeadersVector(builder: flatbuffers.Builder, numElems: number): void;
+    static endExecuteRequest(builder: flatbuffers.Builder): flatbuffers.Offset;
+    static finishExecuteRequestBuffer(builder: flatbuffers.Builder, offset: flatbuffers.Offset): void;
+    static finishSizePrefixedExecuteRequestBuffer(builder: flatbuffers.Builder, offset: flatbuffers.Offset): void;
+    static createExecuteRequest(builder: flatbuffers.Builder, requestId: bigint, tenantIdOffset: flatbuffers.Offset, workspaceIdOffset: flatbuffers.Offset, traceIdOffset: flatbuffers.Offset, connectorNameOffset: flatbuffers.Offset, operationOffset: flatbuffers.Offset, deadlineAtMs: bigint, payloadOffset: flatbuffers.Offset, headersOffset: flatbuffers.Offset): flatbuffers.Offset;
+    unpack(): ExecuteRequestT;
+    unpackTo(_o: ExecuteRequestT): void;
+}
+export declare class ExecuteRequestT {
+    requestId: bigint;
+    tenantId: string | Uint8Array | null;
+    workspaceId: string | Uint8Array | null;
+    traceId: string | Uint8Array | null;
+    connectorName: string | Uint8Array | null;
+    operation: string | Uint8Array | null;
+    deadlineAtMs: bigint;
+    payload: (number)[];
+    headers: (KeyValueT)[];
+    constructor(requestId?: bigint, tenantId?: string | Uint8Array | null, workspaceId?: string | Uint8Array | null, traceId?: string | Uint8Array | null, connectorName?: string | Uint8Array | null, operation?: string | Uint8Array | null, deadlineAtMs?: bigint, payload?: (number)[], headers?: (KeyValueT)[]);
+    pack(builder: flatbuffers.Builder): flatbuffers.Offset;
+}
+//# sourceMappingURL=execute-request.d.ts.map
