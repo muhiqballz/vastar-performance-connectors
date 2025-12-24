@@ -1,23 +1,17 @@
-# OpenAI Configuration
+use_real_openai: true
 
-# Use real OpenAI API or simulator
-use_real_openai: false
-
-# OpenAI API Configuration (when use_real_openai: true)
 openai:
-  api_key: "${OPENAI_API_KEY}"  # Set via environment variable
-  base_url: "https://api.openai.com"
-  model: "gpt-3.5-turbo"
-  timeout_ms: 30000
+  api_key: "${GEMINI_API_KEY}"
+  base_url: "https://generativelanguage.googleapis.com"
+  model: "gemini-1.5-flash"
+  timeout_ms: 60000
 
-# RAI Simulator Configuration (when use_real_openai: false)
+# JANGAN DIHAPUS, biarkan ada meskipun tidak dipakai
 simulator:
   base_url: "http://localhost:4545"
   timeout_ms: 10000
 
-# Vastar Runtime Configuration
 runtime:
   socket_path: "/tmp/vastar-connector-runtime.sock"
-  tenant_id: "openai-demo"
-  workspace_id: "demo-workspace"
-
+  tenant_id: "gemini-java-connector"
+  workspace_id: "default"

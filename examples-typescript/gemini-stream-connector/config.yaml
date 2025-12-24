@@ -1,15 +1,18 @@
-# OpenAI API Configuration
-openai:
-  api_key: ${OPENAI_API_KEY}
-  base_url: "https://api.openai.com"
-  model: "gpt-3.5-turbo"
+# Gemini API Configuration
+gemini:
+  api_key: ${GEMINI_API_KEY}
+  base_url: "https://generativelanguage.googleapis.com"
+  model: "gemini-2.5-flash"
   timeout_ms: 60000
+
 # Vastar Runtime Configuration
 runtime:
-  tenant_id: "openai-connector"
+  tenant_id: "gemini-stream-connector"
   workspace_id: "default"
   timeout_ms: 60000
-# Simulator Configuration (for testing)
+  # Pastikan socket ini sama dengan di start_runtime.sh
+  socket_path: "/tmp/vastar-connector-runtime.sock" 
+
+# Simulator Configuration (Opsional)
 simulator:
   enabled: false
-  base_url: "http://localhost:4545"

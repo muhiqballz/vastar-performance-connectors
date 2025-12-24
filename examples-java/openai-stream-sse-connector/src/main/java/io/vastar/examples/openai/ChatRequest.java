@@ -32,20 +32,37 @@ public class ChatRequest {
         return new Builder();
     }
 
+    // Ubah method toJSON di ChatRequest.java menjadi seperti ini:
     public String toJSON() {
-        Map<String, Object> data = new HashMap<>();
-        data.put("model", model);
-        data.put("messages", messages);
-        data.put("stream", stream);
+    Map<String, Object> data = new HashMap<>();
+    List<Map<String, Object>> contents = new ArrayList<>();
+    
+    for (Message msg : messages) {
+        Map<String, Object> contentMap = new HashMap<>();
+        List<Map<String, Object>> parts = new ArrayList<>();
+        Map<String, Object> textPart = new HashMap<>();
+        
+        textPart.put("text", msg.getContent());
+        parts.add(textPart);
+        
+        contentMap.put("role", msg.getRole().equals("assistant") ? "model" : "user");
+        contentMap.put("parts", parts);
+        contents.add(contentMap);
+    }
 
-        if (temperature != null) {
-            data.put("temperature", temperature);
-        }
-        if (maxTokens != null) {
-            data.put("max_tokens", maxTokens);
-        }
+    data.put("contents", contents);
+    
+    // Menambahkan generationConfig agar Gemini merespons sesuai batasan
+    Map<String, Object> generationConfig = new HashMap<>();
+    if (maxTokens != null) {
+        generationConfig.put("maxOutputTokens", maxTokens);
+    }
+    if (temperature != null) {
+        generationConfig.put("temperature", temperature);
+    }
+    data.put("generationConfig", generationConfig);
 
-        return gson.toJson(data);
+    return gson.toJson(data);
     }
 
     public static class Builder {

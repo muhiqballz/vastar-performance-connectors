@@ -14,7 +14,7 @@ async function main() {
                 'x-goog-api-key': process.env.GEMINI_API_KEY! // Ubah menjadi GEMINI_API_KEY
         },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: "apa itu unsika?" }] }]
+                contents: [{ parts: [{ text: "apa itu bare minimum?" }] }]
             })
         });
 

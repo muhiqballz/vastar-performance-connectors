@@ -1,24 +1,23 @@
 {
-  "name": "openai-stream-sse-connector-ts",
+  "name": "gemini-stream-sse-connector-ts",
   "version": "1.0.0",
-  "description": "OpenAI Stream SSE Connector using Vastar TypeScript SDK",
+  "description": "Gemini Stream SSE Connector using Vastar TypeScript SDK",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
-    "start:simulator": "USE_SIMULATOR=true npm start",
-    "start:openai": "USE_SIMULATOR=false npm start",
     "dev": "ts-node src/index.ts",
     "clean": "rm -rf dist"
   },
   "keywords": [
-    "openai",
+    "gemini",
     "sse",
     "streaming",
     "vastar",
-    "connector"
+    "connector",
+    "flatbuffers"
   ],
-  "author": "Vastar Team",
+  "author": "Muhammad Iqbal Pratama",
   "license": "MIT",
   "dependencies": {
     "yaml": "^2.3.4"
@@ -29,4 +28,3 @@
     "ts-node": "^10.9.2"
   }
 }
-

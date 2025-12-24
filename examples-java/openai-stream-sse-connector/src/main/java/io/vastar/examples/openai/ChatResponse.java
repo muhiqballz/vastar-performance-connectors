@@ -57,54 +57,49 @@ public class ChatResponse {
      */
     @SuppressWarnings("unchecked")
     private static String parseSSEStream(String sseStream) {
-        StringBuilder fullContent = new StringBuilder();
-        String[] lines = sseStream.split("\n\n");
+    StringBuilder fullContent = new StringBuilder();
+    // Gemini terkadang menggunakan \n\n atau \n sebagai pemisah chunk
+    String[] lines = sseStream.split("\n"); 
 
-        for (String chunk : lines) {
-            if (chunk.trim().isEmpty() || !chunk.startsWith("data: ")) {
-                continue;
-            }
-
-            String content = parseStreamChunk(chunk);
+    for (String line : lines) {
+        if (line.startsWith("data: ")) {
+            String content = parseStreamChunk(line);
             if (content != null) {
+                // Cetak langsung ke konsol agar efek "streaming" terlihat
+                System.out.print(content); 
                 fullContent.append(content);
             }
         }
-
-        return fullContent.toString().trim();
+    }
+    return fullContent.toString().trim();
     }
 
     /**
      * Parse streaming SSE chunk (for future streaming support)
      */
     public static String parseStreamChunk(String sseData) {
-        // SSE format: data: {"choices":[{"delta":{"content":"..."}}]}
-        if (sseData.startsWith("data: ")) {
-            String json = sseData.substring(6);
+    if (sseData.startsWith("data: ")) {
+        String json = sseData.substring(6);
+        try {
+            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+            Map<String, Object> data = gson.fromJson(json, type);
 
-            if ("[DONE]".equals(json.trim())) {
-                return null; // End of stream
-            }
-
-            try {
-                Type type = new TypeToken<Map<String, Object>>(){}.getType();
-                Map<String, Object> data = gson.fromJson(json, type);
-
-                @SuppressWarnings("unchecked")
-                List<Map<String, Object>> choices = (List<Map<String, Object>>) data.get("choices");
-                if (choices != null && !choices.isEmpty()) {
-                    Map<String, Object> choice = choices.get(0);
-                    @SuppressWarnings("unchecked")
-                    Map<String, Object> delta = (Map<String, Object>) choice.get("delta");
-                    if (delta != null) {
-                        return (String) delta.get("content");
+            // Navigasi ke struktur Gemini: candidates -> content -> parts -> text
+            List<Map<String, Object>> candidates = (List<Map<String, Object>>) data.get("candidates");
+            if (candidates != null && !candidates.isEmpty()) {
+                Map<String, Object> content = (Map<String, Object>) candidates.get(0).get("content");
+                if (content != null) {
+                    List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
+                    if (parts != null && !parts.isEmpty()) {
+                        return (String) parts.get(0).get("text");
                     }
                 }
-            } catch (Exception e) {
-                // Ignore parse errors for streaming
             }
+        } catch (Exception e) {
+            // Abaikan error parsing pada stream
         }
-        return null;
     }
+    return null;
+}
 }
 
